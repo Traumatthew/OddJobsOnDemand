@@ -194,7 +194,7 @@ namespace OddJobsOnDemand.Controllers
                         await roleManager.CreateAsync(new IdentityRole(RoleNames.Contractor));
                         await UserManager.AddToRoleAsync(user.Id, RoleNames.Contractor);
                         CreateContractor(model);
-                        var newCont = db.Contractors.Where(x => x.Email == model.Email).FirstOrDefault();
+                        var newCont = db.Contractors.Where(x => x.ContractorEmail == model.Email).FirstOrDefault();
                         SetCoords(newCont);
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
@@ -237,12 +237,12 @@ namespace OddJobsOnDemand.Controllers
         {
             Contractor cont = new Contractor();
             cont.ContractorName = model.ContractorName;
-            cont.Phone = model.Phone;
+            cont.ContractorPhone = model.Phone;
             cont.ContractorStreet = model.Street;
             cont.ContractorState = model.State;
             cont.ContractorCity = model.City;
             cont.ContractorZip = model.Zip;
-            cont.Email = model.Email;
+            cont.ContractorEmail = model.Email;
             db.Contractors.Add(cont);
             db.SaveChanges();
 

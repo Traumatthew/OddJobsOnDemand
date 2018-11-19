@@ -13,16 +13,58 @@
         @{ 
             if (User.IsInRole("Customer"))
             {
-                <div class="container text-center">
+                <div class="container text-light">
                     <div class="navbar-header NavButtons">
                         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="toggle navigation">
                         </button>
                         @Html.ActionLink("Odd Jobs On Demand", "Index", "Customers", new { area = ""}, new { @class = "text-light pr-4"})
                     </div>
+                    <div class="navbar-collapse collapse NavButtons" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav mr-auto">
+                            <li class="nav-item pr-3">@Html.ActionLink("Profile", "Index", "Customers", null, new { @class = "text-light" })</li>
+                        </ul>
+                        <span>
+                            @Html.Partial("_LoginPartial")
+                        </span>
+                    </div>
                 </div>
             }
-                }
-        <div class="container">
+            else if (User.IsInRole("Contractor"))
+            {
+                <div class="container">
+                    <div class="navbar-header ContractorNavButtons">
+                        <button type="button" class="navbar-toggler ContractorNavButtons" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        </button>
+                        @Html.ActionLink("Odd Jobs On Demand", "Index", "Contractors", new { area = "" }, new { @class = "text-light pr-4 ContractorNavButtons" })
+                    </div>
+                    <div class="navbar-collapse collapse ContractorNavButtons" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav mr-auto">
+                            <li class="nav-item pr-3">@Html.ActionLink("Job", "Index", "Contractors", null, new { @class = "text-light" })</li>
+                            <li class="nav-item">@Html.ActionLink("Customer Accounts", "CustomerAccounts", "Contractors", null, new { @class = "text-light" })</li>
+                        </ul>
+                        <span>
+                            @Html.Partial("_LoginPartial")
+                        </span>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="container">
+                    <div class="navbar-header NavButtons">
+                        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navabrSupportedContent" aria-expanded="false" aria-label="Toggle Navigation"></button>
+                    </div>
+                    <div class="navbar-collapse collapse NavButtons" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav mr-auto list-inline">
+                            <li class="nav-item pr-3">@Html.ActionLink("Odd Jobs On Demand", "Index", "Home", null, new { @class = "text-light" })</li>
+                        </ul>
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
+            }
+          }
+        </div>
+        @*<div class="container body-content">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
@@ -40,11 +82,11 @@
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
-    </div>
+    </div>*@
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
+        <hr class="text-light"/>
+        <footer class="text-light">
             <p>&copy; @DateTime.Now.Year - OddJobsOnDemand</p>
         </footer>
     </div>

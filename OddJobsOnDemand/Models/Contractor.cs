@@ -16,13 +16,13 @@ namespace OddJobsOnDemand.Models
         public string ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
 
-        public string Phone { get; set; }
-
         public string ContractorName { get; set; }
+
+        public string ContractorPhone { get; set; }
 
         public string AreaOfExpertise { get; set; }
 
-        public string Email { get; set; }
+        public string ContractorEmail { get; set; }
 
         public string ContractorStreet { get; set; }
 
