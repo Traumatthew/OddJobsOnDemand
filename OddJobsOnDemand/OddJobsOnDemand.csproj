@@ -206,8 +206,13 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Contractor.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\GeoLocations.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\JobRequest.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\RoleNames.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

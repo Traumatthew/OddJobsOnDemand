@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using OddJobsOnDemand.Models;
@@ -15,6 +16,7 @@ namespace OddJobsOnDemand.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        ApplicationDbContext db = new ApplicationDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -91,6 +93,22 @@ namespace OddJobsOnDemand.Controllers
             }
         }
 
+        public ActionResult RedirectLogin(string returnUrl)
+        {
+            if (User.IsInRole(RoleNames.Customer))
+            {
+                return RedirectToAction("Index", "Customers");
+            }
+            else if (User.IsInRole(RoleNames.Contractor))
+            {
+                return RedirectToAction("Index", "Contractors");
+            }
+            else
+            {
+                return RedirectToLocal(returnUrl);
+            }
+        }
+
         //
         // GET: /Account/VerifyCode
         [AllowAnonymous]
@@ -151,25 +169,101 @@ namespace OddJobsOnDemand.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, UserRole = model.UserRole };
+                var user = new ApplicationUser { UserName = model.Email, ContractorName = model.ContractorName, Email = model.Email, UserRole = model.UserRole,
+                    FirstName = model.FirstName, LastName = model.LastName, Phone = model.Phone, Street = model.Street, State = model.State, Zip = model.Zip, City = model.City};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    if(model.AccountType == "Cust")
+                    {
+                        var rolestore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+                        var roleManager = new RoleManager<IdentityRole>(rolestore);
+                        await roleManager.CreateAsync(new IdentityRole(RoleNames.Customer));
+                        await UserManager.AddToRolesAsync(user.Id, RoleNames.Customer);
+                        CreateCustomer(model);
+                        var newCust = db.Customers.Where(x => x.Email == model.Email).FirstOrDefault();
+                        SetCoords(newCust);
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        return RedirectToAction("Index", "Customers");
+                    }
+
+                    else if (model.AccountType == "Cont")
+                    {
+                        var rolestore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+                        var roleManager = new RoleManager<IdentityRole>(rolestore);
+                        await roleManager.CreateAsync(new IdentityRole(RoleNames.Contractor));
+                        await UserManager.AddToRoleAsync(user.Id, RoleNames.Contractor);
+                        CreateContractor(model);
+                        var newCont = db.Contractors.Where(x => x.Email == model.Email).FirstOrDefault();
+                        SetCoords(newCont);
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+
+                        return RedirectToAction("Index", "Contractors");
+                    }
+                    
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                    await this.UserManager.AddToRoleAsync(user.Id, model.UserRole);
-                    return RedirectToAction("Index", "Home");
+                    //await this.UserManager.AddToRoleAsync(user.Id, model.UserRole);
+                    //return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        public void CreateCustomer(RegisterViewModel model)
+        {
+            Customer cust = new Customer();
+            cust.FirstName = model.FirstName;
+            cust.LastName = model.LastName;
+            cust.Phone = model.Phone;
+            cust.Street = model.Street;
+            cust.State = model.State;
+            cust.City = model.City;
+            cust.Zip = model.Zip;
+            cust.Email = model.Email;
+            db.Customers.Add(cust);
+            db.SaveChanges();
+        }
+
+        public void CreateContractor(RegisterViewModel model)
+        {
+            Contractor cont = new Contractor();
+            cont.ContractorName = model.ContractorName;
+            cont.Phone = model.Phone;
+            cont.ContractorStreet = model.Street;
+            cont.ContractorState = model.State;
+            cont.ContractorCity = model.City;
+            cont.ContractorZip = model.Zip;
+            cont.Email = model.Email;
+            db.Contractors.Add(cont);
+            db.SaveChanges();
+
+        }
+
+        public void SetCoords(Customer cust)
+        {
+            GeoLocations geo = new GeoLocations();
+            var coords = geo.GetLatandLong(cust);
+            cust.lat = coords["lat"];
+            cust.lng = coords["lng"];
+            db.SaveChanges();
+        }
+
+        public void SetCoords(Contractor cont)
+        {
+            GeoLocations geo = new GeoLocations();
+            var coords = geo.GetLatandLong(cont);
+            cont.lat = coords["lat"];
+            cont.lng = coords["lng"];
+            db.SaveChanges();
         }
 
         //

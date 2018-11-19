@@ -3,13 +3,25 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - OddJobsOnDemand</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
+        @{ 
+            if (User.IsInRole("Customer"))
+            {
+                <div class="container text-center">
+                    <div class="navbar-header NavButtons">
+                        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="toggle navigation">
+                        </button>
+                        @Html.ActionLink("Odd Jobs On Demand", "Index", "Customers", new { area = ""}, new { @class = "text-light pr-4"})
+                    </div>
+                </div>
+            }
+                }
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -33,7 +45,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - OddJobsOnDemand</p>
         </footer>
     </div>
 
