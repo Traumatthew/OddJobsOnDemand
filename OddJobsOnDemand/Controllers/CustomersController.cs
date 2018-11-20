@@ -37,7 +37,33 @@ namespace OddJobsOnDemand.Controllers
             if (found == true)
             {
                 var jobs = db.JobRequests.Where(x => x.CustomerId == customer.CustomerId).ToList();
+                JobRequestsViewModel viewModel = new JobRequestsViewModel() { cust = customer, JobRequests = jobs };
+                //var acctDet = db.AccountDetails_Customer.Where(x => x.CustomerId == customer.CustomerId).FirstOrDefault();
+                //CustomerAccountViewModel viewModel = new CustomerAccountViewModel() { cust = customer, account = accountDet, jobs = JobReq };
+                return View(viewModel);
             }
+            else
+            {
+                return RedirectToAction("Initial");
+            }
+        }
+        
+        //GET
+        public ActionResult Initial()
+        {
+            AccountDetails_Customer account = new AccountDetails_Customer();
+            return View(account);
+        }
+
+        //POST
+        [HttpPost]
+        public ActionResult Initial(AccountDetails_Customer account)
+        {
+            AccountDetails_Customer newJob = new AccountDetails_Customer();
+            var cust = GetCustomer();
+            newJob.CustomerId = cust.CustomerId;
+            newJob.date = account.date;
+            db.AccountDetails_Customers.Add(newJob);
             return View();
         }
     }

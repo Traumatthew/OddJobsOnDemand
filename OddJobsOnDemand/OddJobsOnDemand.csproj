@@ -209,6 +209,14 @@
     <Compile Include="Migrations\201811192032316_Updated models.Designer.cs">
       <DependentUpon>201811192032316_Updated models.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811201701499_added AccountDetails_Customer model.cs" />
+    <Compile Include="Migrations\201811201701499_added AccountDetails_Customer model.Designer.cs">
+      <DependentUpon>201811201701499_added AccountDetails_Customer model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811201734153_updated IdentityModels.cs" />
+    <Compile Include="Migrations\201811201734153_updated IdentityModels.Designer.cs">
+      <DependentUpon>201811201734153_updated IdentityModels.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountDetails_Customer.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -309,6 +317,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811192032316_Updated models.resx">
       <DependentUpon>201811192032316_Updated models.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811201701499_added AccountDetails_Customer model.resx">
+      <DependentUpon>201811201701499_added AccountDetails_Customer model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811201734153_updated IdentityModels.resx">
+      <DependentUpon>201811201734153_updated IdentityModels.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

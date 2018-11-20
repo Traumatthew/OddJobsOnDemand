@@ -71,7 +71,7 @@ namespace OddJobsOnDemand.Models
         public DbSet<Contractor> Contractors { get; set; }
         public DbSet<JobRequests> JobRequests { get; set; }
         public DbSet<GeoLocations> GeoLocations { get; set; }
-
+        public DbSet<AccountDetails_Customer> AccountDetails_Customers { get; set; }
 
     }
 }

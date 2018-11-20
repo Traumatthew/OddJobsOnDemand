@@ -15,6 +15,7 @@ namespace OddJobsOnDemand.Models
         [ForeignKey("Customers")]
         [Display(Name ="Customer Id")]
         public int CustomerId { get; set; }
+        public Customer Customers { get; set; }
 
         [Display(Name ="Requested Job Date")]
         public DateTime date { get; set; }
