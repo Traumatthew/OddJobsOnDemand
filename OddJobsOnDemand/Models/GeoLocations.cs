@@ -20,12 +20,12 @@ namespace OddJobsOnDemand.Models
         public string Lat { get; set; }
         public string Long { get; set; }
 
-        public string key = Key.GKey;
-        public string srcKey = "https://maps.googleapis.com/maps/api/js?libraries=places&key=" + Key.GKey + "&callback=initMap";
+        public string key = Keys.GoogleKey;
+        public string srcKey = "https://maps.googleapis.com/maps/api/js?libraries=places&key=" + Keys.GoogleKey + "&callback=initMap";
 
         public dynamic GetLatandLong(Customer cust)
         {
-            string url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + cust.Street.Replace(" ", "+") + cust.City.Replace(" ", "+") + ",+" + cust.State + ",+&key=" + Key.GeoKey;
+            string url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + cust.Street.Replace(" ", "+") + cust.City.Replace(" ", "+") + ",+" + cust.State + ",+&key=" + Keys.GoogleKey;
             var result = new System.Net.WebClient().DownloadString(url);
             var items = JsonConvert.DeserializeObject<dynamic>(result);
             return items.results[0].geometry.location;
@@ -33,7 +33,7 @@ namespace OddJobsOnDemand.Models
 
         public dynamic GetLatandLong(Contractor cont)
         {
-            string url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + cont.ContractorStreet.Replace(" ", "+") + cont.ContractorCity.Replace(" ", "+") + ",+" + cont.ContractorState + ",+&key=" + Key.GeoKey;
+            string url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + cont.ContractorStreet.Replace(" ", "+") + cont.ContractorCity.Replace(" ", "+") + ",+" + cont.ContractorState + ",+&key=" + Keys.GoogleKey;
             var result = new System.Net.WebClient().DownloadString(url);
             var items = JsonConvert.DeserializeObject<dynamic>(result);
             return items.results[0].geometry.location;

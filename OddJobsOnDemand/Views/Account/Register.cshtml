@@ -1,46 +1,98 @@
 ﻿@model OddJobsOnDemand.Models.RegisterViewModel
 @{
-                /**/
+    /**/
 
-                ViewBag.Title = "Register";
+    ViewBag.Title = "Register";
 }
 
-<h2>@ViewBag.Title.</h2>
+<h2> class="text-light textGeorgia">@ViewBag.Title.</h2>
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
+    <h4> class="text-light">Create a new account.</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label bg-dark text-light rounded" })
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label bg-dark text-light rounded" })
         <div class="col-md-10">
             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label bg-dark text-light rounded" })
         <div class="col-md-10">
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
+        @Html.LabelFor(x => x.FirstName, new { @class = "col-md-2 control-label bg-dark text-light rounded" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.LastName, new { @class = "col-md-2 control-label bg-dark text-light rounded" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(x => x.LastName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Phone, new { @class = "col-md-2 control-label bg-dark text-light rounded" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(x => x.Phone, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Street, new { @class = "col-md-2 control-label bg-dark text-light rounded" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(x => x.Street, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.State, new { @class = "col-md-2 control-label bg-dark text-light rounded" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(x => x.State, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.City, new { @class = "col-md-2 control-label bg-dark text-light rounded" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(x => x.City, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Zip, new { @class = "col-md-2 control-label bg-dark text-light rounded" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(x => x.Zip, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Account Type", new { @class="col-md-2 control-label bg-dark text-light rounded"})
+        <div class="col-md-10 text-light">
+            <label>Customer</label>
+            @Html.RadioButtonFor(x => x.AccountType, "Cust")<br/>
+            <label>Contractor</label>
+            @Html.RadioButtonFor(x => x.AccountType, "Cont")
+        </div>
+    </div>
+
+    @*<div class="form-group">
         @Html.LabelFor(m => m.UserRole, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.RadioButtonFor(m => m.UserRole, "Customer", new { @class = "radio-inline" })@Html.Label("Customer")
             @Html.RadioButtonFor(m => m.UserRole, "Contractor", new { @class = "radio-inline" })@Html.Label("Contractor")
         </div>
-    </div>
+    </div>*@
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
+            <input type="submit" class="btn btn-outline-light bg-danger btn-lg text-light CustomerButton" value="Register" />
         </div>
     </div>
 }
